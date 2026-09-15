@@ -402,24 +402,24 @@ img { max-width: 100%; display: block; }
 
 @keyframes sliceShiftHacker2 {
   0%, 69%, 100% { opacity: 0; transform: translateX(0); }
-  75% { opacity: 1; transform: translateX(12px); }
-  85% { opacity: 1; transform: translateX(-16px); }
+  93% { opacity: 1; transform: translateX(12px); }
+  94% { opacity: 1; transform: translateX(-16px); }
   95% { opacity: 1; transform: translateX(5px); }
   96% { opacity: 0; transform: translateX(0); }
 }
 
 @keyframes sliceShiftHacker3 {
   0%, 69%, 100% { opacity: 0; transform: translateX(0); }
-  75% { opacity: 1; transform: translateX(-10px); }
-  85% { opacity: 1; transform: translateX(14px); }
+  93% { opacity: 1; transform: translateX(-10px); }
+  94% { opacity: 1; transform: translateX(14px); }
   95% { opacity: 1; transform: translateX(-8px); }
   96% { opacity: 0; transform: translateX(0); }
 }
 
 @keyframes sliceShiftHacker4 {
   0%, 69%, 100% { opacity: 0; transform: translateX(0); }
-  75% { opacity: 1; transform: translateX(16px); }
-  85% { opacity: 1; transform: translateX(-12px); }
+  93% { opacity: 1; transform: translateX(16px); }
+  94% { opacity: 1; transform: translateX(-12px); }
   95% { opacity: 1; transform: translateX(6px); }
   96% { opacity: 0; transform: translateX(0); }
 }
@@ -868,4 +868,80 @@ a:focus-visible,
     justify-content: center;
     gap: 10px;
   }
+}
+/* ======================================================
+   TAMBAHAN #2 — Fix tinggi hero supaya tidak ada
+   ruang kosong besar saat dibuka di HP
+   ====================================================== */
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding: 110px 0 48px;
+  }
+
+  .hero-container {
+    gap: 32px;
+  }
+
+  .photo-frame {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero {
+    padding: 100px 0 36px;
+  }
+
+  .photo-frame {
+    max-width: 260px;
+    outline-offset: 4px;
+  }
+}
+/* ======================================================
+   Layer outline biru dari foto-biru.png
+   Ditempel LANGSUNG dengan ukuran & posisi yang sama persis
+   seperti .photo-stack (bukan .photo-frame), supaya crop
+   foto-biru selalu identik dengan foto-asli
+   ====================================================== */
+.photo-frame {
+  position: relative;
+}
+
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  /* posisi & ukuran ini HARUS sama persis dengan .photo-stack */
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  transform: scale(1.015);
+  transform-origin: center;
+
+  background-image: url('foto-biru.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+
+  /* Sinkron persis dengan fade .photo-stack */
+  -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 75%, transparent 100%);
+
+  /* Garis tipis mentah, tanpa glow tebal */
+  filter:
+    drop-shadow(1px 0 0 #88D8C7)
+    drop-shadow(-1px 0 0 #88D8C7)
+    drop-shadow(0 1px 0 #88D8C7)
+    drop-shadow(0 -1px 0 #88D8C7);
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+.photo-frame .photo-stack {
+  position: relative;
+  z-index: 1;
 }
