@@ -51,15 +51,9 @@
     <section class="hero" id="home">
       <div class="hero-container">
 
-        <div class="hero-text">
+        <div class="hero-text hero-text-left">
           <p class="hero-eyebrow">Muh Ibnu rafi zulkarnaen</p>
-          <p class="hero-tagline">Cyber Security.</p>
-          <p class="hero-bio">
-            Saya seorang mahasiswa Informatika yang bergerak di dua dunia: pengembangan front-end
-            yang rapi dan terstruktur, serta eksplorasi keamanan siber yang penuh rasa ingin tahu.
-            Portofolio ini adalah tempat kedua sisi itu bertemu.
-          </p>
-          <div class="hero-cta"></div>
+          <button type="button" class="btn-cert-scroll" id="certScrollBtn">Lihat Sertifikat &rarr;</button>
         </div>
 
         <div class="hero-visual">
@@ -70,16 +64,25 @@
               <img src="foto-asli.png" aria-hidden="true" class="photo photo-slice photo-slice-2">
               <img src="foto-asli.png" aria-hidden="true" class="photo photo-slice photo-slice-4">
               <img src="foto-hacker.png" alt="Alter-ego versi hacker" class="photo photo-hacker" id="photoHacker">
-              <img src="foto-hacker.png" alt="Alter-ego versi hacker" class="photo photo-slice-hacker photo-slice-hacker1" id="photoHacker">
-              <img src="foto-hacker.png" alt="Alter-ego versi hacker" class="photo photo-slice-hacker photo-slice-hacker2" id="photoHacker">
-              <img src="foto-hacker.png" alt="Alter-ego versi hacker" class="photo photo-slice-hacker photo-slice-hacker3" id="photoHacker">
-              <img src="foto-hacker.png" alt="Alter-ego versi hacker" class="photo photo-slice-hacker photo-slice-hacker4" id="photoHacker">
+              <img src="foto-hacker.png" aria-hidden="true" class="photo photo-slice-hacker photo-slice-hacker1">
+              <img src="foto-hacker.png" aria-hidden="true" class="photo photo-slice-hacker photo-slice-hacker2">
+              <img src="foto-hacker.png" aria-hidden="true" class="photo photo-slice-hacker photo-slice-hacker3">
+              <img src="foto-hacker.png" aria-hidden="true" class="photo photo-slice-hacker photo-slice-hacker4">
             </div>
             <span class="photo-caption">
              <div class="frame-tag frame-tag-top">STATUS: ONLINE</div>
              <div class="frame-tag frame-tag-bottom">ID: 0x0F3C</div>
             </span>
           </div>
+        </div>
+
+        <div class="hero-text hero-text-right">
+          <p class="hero-tagline">Cyber Security.</p>
+          <p class="hero-bio">
+            Saya seorang mahasiswa Informatika yang bergerak di dua dunia: pengembangan front-end
+            yang rapi dan terstruktur, serta eksplorasi keamanan siber yang penuh rasa ingin tahu.
+            Portofolio ini adalah tempat kedua sisi itu bertemu.
+          </p>
         </div>
 
       </div>
@@ -227,22 +230,33 @@
       const frame = document.getElementById('photoFrame');
       const hacker = document.getElementById('photoHacker');
 
-      // Glitch overlay (noise TV + siluet topeng) — sekilas setiap masuk section baru
+      // Glitch overlay (noise TV + siluet topeng) — trigger saat klik menu Home/About/Visi Misi saja
+      // Tidak lagi trigger saat scroll manual, dan tidak trigger untuk Certificates/Contact
       const glitchOverlay = document.getElementById('glitchOverlay');
-      const sections = document.querySelectorAll('main > section, footer.footer');
+      const glitchNavLinks = document.querySelectorAll(
+        '.nav-link[href="#home"], .nav-link[href="#about"], .nav-link[href="#visi-misi"]'
+      );
 
-      if (glitchOverlay && sections.length) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              glitchOverlay.classList.remove('is-triggered');
-              void glitchOverlay.offsetWidth;
-              glitchOverlay.classList.add('is-triggered');
-            }
-          });
-        }, { threshold: 0.35 });
+      function triggerGlitch() {
+        if (!glitchOverlay) return;
+        glitchOverlay.classList.remove('is-triggered');
+        void glitchOverlay.offsetWidth;
+        glitchOverlay.classList.add('is-triggered');
+      }
 
-        sections.forEach((section) => observer.observe(section));
+      glitchNavLinks.forEach((link) => {
+        link.addEventListener('click', triggerGlitch);
+      });
+
+      // Glitch sambutan saat pertama kali membuka website
+      triggerGlitch();
+
+      const certBtn = document.getElementById('certScrollBtn');
+      if (certBtn) {
+        certBtn.addEventListener('click', () => {
+          const target = document.getElementById('certificates');
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
       }
 
       if (!ring) return;

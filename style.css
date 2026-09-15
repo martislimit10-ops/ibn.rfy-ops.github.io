@@ -172,13 +172,24 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-container {
-  max-width: 1120px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 64px;
+  grid-template-columns: 0.65fr 1.4fr 0.65fr;
+  gap: 28px;
   align-items: center;
+}
+
+.hero-text-left {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.hero-text-right {
+  text-align: left;
 }
 
 .hero-eyebrow {
@@ -209,10 +220,23 @@ img { max-width: 100%; display: block; }
   margin-bottom: 36px;
 }
 
-.hero-cta {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+.btn-cert-scroll {
+  margin-top: 14px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-dim);
+  color: #06181a;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.btn-cert-scroll:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
 }
 
 .btn {
@@ -251,10 +275,23 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 90%);
+  z-index: 2;
+  pointer-events: none;
+}
+
 .photo-frame {
   position: relative;
   width: 100%;
-  max-width: 340px;
+  max-width: 460px;
 }
 
 .photo-stack {
@@ -314,24 +351,19 @@ img { max-width: 100%; display: block; }
   opacity: 0;
 }
 
-.photo-slice-hacker1 {
-  clip-path: inset(8% 0 78% 0);
-  animation: sliceShift1 3.5s steps(1, end) infinite;
-}
-
 .photo-slice-hacker2 {
   clip-path: inset(35% 0 45% 0);
-  animation: sliceShift2 3.5s steps(1, end) infinite;
+  animation: sliceShiftHacker2 5s steps(1, end) infinite;
 }
 
 .photo-slice-hacker3 {
   clip-path: inset(58% 0 25% 0);
-  animation: sliceShift3 3.5s steps(1, end) infinite;
+  animation: sliceShiftHacker3 5s steps(1, end) infinite;
 }
 
 .photo-slice-hacker4 {
   clip-path: inset(80% 0 5% 0);
-  animation: sliceShift4 3.5s steps(1, end) infinite;
+  animation: sliceShiftHacker4 5s steps(1, end) infinite;
 }
 
 @keyframes sliceShift1 {
@@ -366,6 +398,32 @@ img { max-width: 100%; display: block; }
   96% { opacity: 0; transform: translateX(0); }
 }
 
+/*foto2*/
+
+@keyframes sliceShiftHacker2 {
+  0%, 69%, 100% { opacity: 0; transform: translateX(0); }
+  75% { opacity: 1; transform: translateX(12px); }
+  85% { opacity: 1; transform: translateX(-16px); }
+  95% { opacity: 1; transform: translateX(5px); }
+  96% { opacity: 0; transform: translateX(0); }
+}
+
+@keyframes sliceShiftHacker3 {
+  0%, 69%, 100% { opacity: 0; transform: translateX(0); }
+  75% { opacity: 1; transform: translateX(-10px); }
+  85% { opacity: 1; transform: translateX(14px); }
+  95% { opacity: 1; transform: translateX(-8px); }
+  96% { opacity: 0; transform: translateX(0); }
+}
+
+@keyframes sliceShiftHacker4 {
+  0%, 69%, 100% { opacity: 0; transform: translateX(0); }
+  75% { opacity: 1; transform: translateX(16px); }
+  85% { opacity: 1; transform: translateX(-12px); }
+  95% { opacity: 1; transform: translateX(6px); }
+  96% { opacity: 0; transform: translateX(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .photo-slice {
     animation: none;
@@ -394,21 +452,21 @@ img { max-width: 100%; display: block; }
   left: var(--x, 50%);
   width: 10px;
   height: 10px;
-  border: 1.5px solid #ff0000;
+  border: 1.5px solid #0091ff;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 9999;
   opacity: 0;
-  box-shadow: 0 0 16px rgba(255, 0, 0, 0.4), inset 0 0 12px rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 16px rgba(0, 157, 255, 0.4), inset 0 0 12px rgba(0, 157, 255, 0.4);
   transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .spotlight-ring.is-visible { opacity: 1; }
 
 .spotlight-ring.is-over-photo {
-  width: 10px;
-  height: 10px;
+  width: 180px;
+  height: 180px;
 }
 
 .photo-caption {
@@ -632,8 +690,9 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 900px) {
-  .hero-container { grid-template-columns: 1fr; }
-  .hero-visual { order: -1; }
+  .hero-container { grid-template-columns: 1fr; text-align: center; }
+  .hero-text-left,
+  .hero-text-right { text-align: center; align-items: center; }
   .nav-menu { display: none; }
   .vm-grid { grid-template-columns: 1fr; }
   .cert-grid { grid-template-columns: repeat(2, 1fr); }
