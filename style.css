@@ -846,3 +846,26 @@ a:focus-visible,
   .glitch-scanline-1,
   .glitch-scanline-2 { animation: none; opacity: 0; }
 }
+
+/* Aturan khusus tampilan HP */
+@media (max-width: 768px) {
+  /* Ubah tata letak utama jadi membujur dari atas ke bawah */
+  .hero, main, section {
+    flex-direction: column !important;
+    padding: 20px !important;
+    text-align: center;
+  }
+
+  /* Rapikan ukuran gambar agar tidak melebihi layar HP */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Rapikan navigasi menu atas */
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
